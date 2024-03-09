@@ -1,4 +1,4 @@
-package ac1
+package main
 
 import (
 	"fmt"

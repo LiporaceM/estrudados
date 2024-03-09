@@ -1,4 +1,4 @@
-package ac2
+package main
 
 import "fmt"
 

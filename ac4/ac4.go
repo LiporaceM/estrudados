@@ -1,43 +1,44 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-)
+import "fmt"
 
-func triangulo(a float64, b float64, c float64) {
-	sides := []float64{a, b, c}
-	sort.Sort(sort.Reverse(sort.Float64Slice(sides)))
-	a, b, c = sides[0], sides[1], sides[2]
+func hanoi(n int, origem, trabalho, destino string) {
+	if n > 0 {
+		hanoi(n-1, origem, destino, trabalho)
 
-	if a >= b+c {
-		fmt.Println("NAO FORMA TRIANGULO")
-		return
+		fmt.Printf("Movendo o disco %d da origem %s para o destino %s\n", n, origem, destino)
+
+		hanoi(n-1, trabalho, origem, destino)
 	}
+}
+func findPair(arr []int, target int) (int, int) {
+	seen := make(map[int]bool)
+	for _, num := range arr {
+		complement := target - num
 
-	if a*a == b*b+c*c {
-		fmt.Println("TRIANGULO RETANGULO")
-	}
+		if seen[complement] {
+			return complement, num
+		}
 
-	if a*a > b*b+c*c {
-		fmt.Println("TRIANGULO OBTUSANGULO")
+		seen[num] = true
 	}
-
-	if a*a < b*b+c*c {
-		fmt.Println("TRIANGULO ACUTANGULO")
-	}
-
-	if a == b && b == c {
-		fmt.Println("TRIANGULO EQUILATERO")
-	} else if a == b || b == c || a == c {
-		fmt.Println("TRIANGULO ISOSCELES")
-	}
+	return -1, -1
 }
 
 func main() {
-	triangulo(7.0, 5.0, 7.0)
-	triangulo(6.0, 6.0, 10.0)
-	triangulo(6.0, 6.0, 6.0)
-	triangulo(5.0, 7.0, 2.0)
-	triangulo(6.0, 8.0, 10.0)
+	numDisks := 3
+	hanoi(numDisks, "A", "B", "C")
+
+	fmt.Println(("----------------------------------"))
+
+	array := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	target := 5
+
+	num1, num2 := findPair(array, target)
+
+	if num1 == -1 && num2 == -1 {
+		fmt.Println("(-1,-1)")
+	} else {
+		fmt.Printf("Par encontrado: (%d,%d)\n", num1, num2)
+	}
 }

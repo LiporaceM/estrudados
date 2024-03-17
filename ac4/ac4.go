@@ -1,52 +1,43 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
-func hanoi(n int, origem, trabalho, destino string) {
-	if n > 0 {
-		hanoi(n-1, origem, destino, trabalho)
+func triangulo(a float64, b float64, c float64) {
+	sides := []float64{a, b, c}
+	sort.Sort(sort.Reverse(sort.Float64Slice(sides)))
+	a, b, c = sides[0], sides[1], sides[2]
 
-		fmt.Printf("Movendo o disco %d da origem %s para o destino %s\n", n, origem, destino)
-
-		hanoi(n-1, trabalho, origem, destino)
-	}
-}
-func findPair(arr []int, target int) (int, int, bool) {
-	left, right := 0, len(arr)-1
-
-	for left < right {
-		sum := arr[left] + arr[right]
-
-		if sum == target {
-			// Encontrou um par que soma para o alvo
-			return arr[left], arr[right], true
-		} else if sum < target {
-			// Se a soma for menor que o alvo, mova o ponteiro esquerdo para a direita
-			left++
-		} else {
-			// Se a soma for maior que o alvo, mova o ponteiro direito para a esquerda
-			right--
-		}
+	if a >= b+c {
+		fmt.Println("NAO FORMA TRIANGULO")
+		return
 	}
 
-	// Nenhum par encontrado, retorna (-1, -1) e false
-	return -1, -1, false
+	if a*a == b*b+c*c {
+		fmt.Println("TRIANGULO RETANGULO")
+	}
+
+	if a*a > b*b+c*c {
+		fmt.Println("TRIANGULO OBTUSANGULO")
+	}
+
+	if a*a < b*b+c*c {
+		fmt.Println("TRIANGULO ACUTANGULO")
+	}
+
+	if a == b && b == c {
+		fmt.Println("TRIANGULO EQUILATERO")
+	} else if a == b || b == c || a == c {
+		fmt.Println("TRIANGULO ISOSCELES")
+	}
 }
 
 func main() {
-	numDisks := 3
-	hanoi(numDisks, "A", "B", "C")
-
-	fmt.Println(("----------------------------------"))
-
-	array := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	target := 10
-
-	num1, num2, found := findPair(array, target)
-
-	if found {
-		fmt.Printf("Par encontrado: (%d,%d)\n", num1, num2)
-	} else {
-		fmt.Println("(-1-1)")
-	}
+	triangulo(7.0, 5.0, 7.0)
+	triangulo(6.0, 6.0, 10.0)
+	triangulo(6.0, 6.0, 6.0)
+	triangulo(5.0, 7.0, 2.0)
+	triangulo(6.0, 8.0, 10.0)
 }
